@@ -18,7 +18,7 @@ public class User {
         return new User().new UserBuilder();
     }
 
-    class UserBuilder {
+    public class UserBuilder {
 
         public UserBuilder() {
         }

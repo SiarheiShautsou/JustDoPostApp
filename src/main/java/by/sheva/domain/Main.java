@@ -1,5 +1,8 @@
 package by.sheva.domain;
 
+import by.sheva.repository.user.UserRepository;
+import by.sheva.repository.user.UserRepositoryImpl;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,16 +10,6 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-
-        User user = User.builder()
-                .setUserId(1)
-                .setUserName("alifl")
-                .setPassword("468468468135")
-                .setEmail("WDKYwyGDI")
-                .setPhoto("ADCKAEKCGAKEC")
-                .build();
-
-        System.out.println(user);
 
         Comment comment = Comment.builder()
                 .setCommentId(1)
@@ -29,7 +22,7 @@ public class Main {
 
         Post post = Post.builder()
                 .setPostId(1)
-                .setUser(user)
+//                .setUser(user)
                 .setDescription("sdvcsdvcs")
                 .setImage("walhcuhc")
                 .setCreatedAt(new Date(System.currentTimeMillis()))
@@ -37,5 +30,20 @@ public class Main {
                 .build();
 
         System.out.println(post);
+
+        User user1 = User.builder()
+                .setUserId(12)
+                .setUserName("eavrsvrb")
+                .setPassword("srbsdra")
+                .setName("abrzrb")
+                .setEmail("basrar")
+                .setPhoto("arbtrr")
+                .build();
+
+        User user2 = UserRepositoryImpl.getInstance().updateObject(user1);
+        System.out.println(user2);
+
     }
+
+
 }

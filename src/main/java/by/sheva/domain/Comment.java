@@ -17,7 +17,7 @@ public class Comment {
     public static CommentBuilder builder(){
         return new Comment().new CommentBuilder();
     }
-    class CommentBuilder {
+    public class CommentBuilder {
         public CommentBuilder setCommentId(Integer commentId) {
             Comment.this.commentId = commentId;
             return this;

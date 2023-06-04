@@ -19,7 +19,7 @@ public class Post {
     public static PostBuilder builder(){
         return new Post().new PostBuilder();
     }
-    class PostBuilder {
+    public class PostBuilder {
 
         public PostBuilder setPostId(Integer postId) {
             Post.this.postId = postId;
