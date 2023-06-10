@@ -108,6 +108,74 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
+    public int getCommentCountByPost(Post post) {
+
+        final String query = "select count(*) from post_app.comments where post_id = ?";
+
+        int result = 0;
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, post.getPostId());
+
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+                result = rs.getInt(1);
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deleteAllCommentsByPost(Post post) {
+
+        final String query = "delete from post_app.comments where post_id = ?";
+
+        boolean result = false;
+
+        try (PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, post.getPostId());
+
+            int row = statement.executeUpdate();
+            if (row != 0){
+                result = true;
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Comment> findAllCommentsByPost(Post post) {
+
+        final String query = "select * from post_app.comments where post_id = ?";
+
+        List<Comment> comments = new ArrayList<>();
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, post.getPostId());
+
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                comments.add(commentMapper(rs));
+            }
+
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return comments;
+    }
+
+    @Override
     public Comment creatObject(Comment object) {
 
         final String query = "insert into post_app.comments (message, post_id, user_id, created_at) values (?, ?, ?,?)";

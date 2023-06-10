@@ -101,6 +101,162 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
+    public List<Post> findMostPopularPosts() {
+
+        final String query = "select p.post_id, p.user_id, p.image, p.created_at, p.description, l.post_id AS likesCount " +
+                "from post_app.posts p join post_app.likes l on p.post_id = l.post_id order by count(likesCount) desc limit 10";
+
+        List<Post> posts = new ArrayList<>();
+
+        try(Statement statement = getConnection().createStatement()) {
+
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                posts.add(postMapper(rs));
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return posts;
+    }
+
+    @Override
+    public List<Post> findPostsByUser(User user) {
+
+        final String query = "select * from post_app.posts where user_id = ?";
+
+        List<Post> posts = new ArrayList<>();
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, user.getUserId());
+
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                posts.add(postMapper(rs));
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return posts;
+    }
+
+    @Override
+    public boolean getLike(Post post, User user) {
+
+        final String query = "insert into post_app.likes (user_id, post_id) values (?,?)";
+
+        boolean result = false;
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, user.getUserId());
+            statement.setInt(2, post.getPostId());
+
+            int row = statement.executeUpdate();
+            if (row != 0){
+                result = true;
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deleteLike(Post post, User user) {
+
+        final String query = "delete from post_app.likes where user_id = ? and post_id = ?";
+
+        boolean result = false;
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, user.getUserId());
+            statement.setInt(2, post.getPostId());
+
+            int row = statement.executeUpdate();
+            if (row != 0){
+                result = true;
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public int getLikeCount(Post post) {
+
+        final String query = "select count(*) from post_app.likes where post_id = ?";
+
+        int result = 0;
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, post.getPostId());
+
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()){
+                result = rs.getInt(1);
+            }
+
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean isLikedPost(Post post, User user) {
+
+        final String query = "select count(*) from post_app.likes where post_id = ? and user_id = ?";
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, post.getPostId());
+            statement.setInt(2, user.getUserId());
+
+            ResultSet rs = statement.executeQuery();
+
+            return rs.next();
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int getUserPostsCount(User user) {
+
+        final String query = "select count(post_id) from post_app.posts where user_id = ?";
+
+        int result = 0;
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+
+            statement.setInt(1, user.getUserId());
+
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                result = rs.getInt(1);
+            }
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    @Override
     public Post creatObject(Post object) {
 
         final String query = "insert into post_app.posts (user_id, image, created_at, description) " +

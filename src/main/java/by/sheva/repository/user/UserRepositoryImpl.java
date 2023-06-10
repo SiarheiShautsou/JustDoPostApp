@@ -201,7 +201,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setInt(2, subscriber.getUserId());
 
             int rows = statement.executeUpdate();
-            if(rows == 0){
+            if(rows != 0){
                 result = true;
             }
 

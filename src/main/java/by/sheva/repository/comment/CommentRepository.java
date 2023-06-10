@@ -1,6 +1,7 @@
 package by.sheva.repository.comment;
 
 import by.sheva.domain.Comment;
+import by.sheva.domain.Post;
 import by.sheva.repository.CRUDRepository;
 
 import java.util.List;
@@ -17,6 +18,12 @@ public interface CommentRepository extends CRUDRepository<Integer, Comment> {
 
     @Override
     List<Comment> findAll(int limit, int offset);
+
+    List<Comment> findAllCommentsByPost(Post post);
+
+    boolean deleteAllCommentsByPost(Post post);
+
+    int getCommentCountByPost(Post post);
 
     @Override
     Comment creatObject(Comment object);
