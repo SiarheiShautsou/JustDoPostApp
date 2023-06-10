@@ -17,7 +17,22 @@ public interface UserRepository extends CRUDRepository<Integer, User> {
 
     Optional<User> findByUsername(String username) throws SQLException;
 
+    List<User> getSubscribersByUser(User user);
+
+    List<User> getSubscriptionsByUser(User user);
+
+    int getSubscribersCount(User user);
+
+    int getSubscriptionsCount(User user);
+
+    boolean subscribeOnUser(User user, User subscriber);
+
+    boolean unsubscribeOnUser(User user, User subscriber);
+
+    boolean isSubscribed(User user, User subscriber);
+
     @Override
+
     List<User> findAll();
 
     @Override
