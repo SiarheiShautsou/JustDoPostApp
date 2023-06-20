@@ -19,7 +19,7 @@ public interface PostService{
 
     List<Post> findMostPopularPosts();
 
-    List<Post> findAllPostsByUser(User user);
+    List<Post> findAllPostsByUser(User user, int limit, int offset);
 
     boolean getLikeForPost(Post post, User user);
 
@@ -30,6 +30,8 @@ public interface PostService{
     int getLikesCount(Post post);
 
     int getUserPostsCount(User user);
+
+    List<Post> findPostsLikedByUser(User user, int limit, int offset);
 
     Post creatPost(Post post);
 

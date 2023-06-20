@@ -22,7 +22,9 @@ public interface PostRepository extends CRUDRepository<Integer, Post> {
 
     List<Post> findMostPopularPosts();
 
-    List<Post> findPostsByUser(User user);
+    List<Post> findPostsByUser(User user, int limit, int offset);
+
+    List<Post> findPostsLikedByUser(User user, int limit, int offset);
 
     boolean getLike(Post post, User user);
 

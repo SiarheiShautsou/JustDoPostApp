@@ -24,7 +24,7 @@ public interface UserService {
 
     boolean unsubscribeOnUser(User user, User subscriber);
 
-    boolean isSubscribed(User user, User subscriber);
+    boolean isSubscribed(String username, String subscriberUsername);
 
     List<User> findAllUsers();
 

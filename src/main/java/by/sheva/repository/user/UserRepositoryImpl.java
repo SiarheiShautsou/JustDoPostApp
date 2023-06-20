@@ -213,15 +213,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean isSubscribed(User user, User subscriber) {
+    public boolean isSubscribed(String username, String subscriberUsername) {
 
-        final String query = "select count (*) from post_app.subscribers where parent_id = ? and child_id = ?";
+        final String query = "select count (*) from post_app.subscribers join post_app.users followed on post_app.subscribers.child_id = followed.user_id " +
+                "join post_app.users follower on post_app.subscribers.parent_id = follower.user_id " +
+                "where followed.username = ? and follower.username = ?";
 
         boolean result = false;
         try(PreparedStatement statement = getConnection().prepareStatement(query)){
 
-            statement.setInt(1, user.getUserId());
-            statement.setInt(2, subscriber.getUserId());
+            statement.setString(1, username);
+            statement.setString(2, subscriberUsername);
 
             int rows = statement.executeUpdate();
             if(rows == 0){

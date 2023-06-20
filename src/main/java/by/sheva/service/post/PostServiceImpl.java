@@ -16,7 +16,7 @@ public class PostServiceImpl implements PostService{
     public PostServiceImpl() {
     }
 
-    public PostServiceImpl getInstance() {
+    public static PostServiceImpl getInstance() {
 
         if (instance == null) {
             instance = new PostServiceImpl();
@@ -50,8 +50,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> findAllPostsByUser(User user) {
-        return repository.findPostsByUser(user);
+    public List<Post> findAllPostsByUser(User user, int limit, int offset) {
+        return repository.findPostsByUser(user, limit, offset);
     }
 
     @Override
@@ -77,6 +77,11 @@ public class PostServiceImpl implements PostService{
     @Override
     public int getUserPostsCount(User user) {
         return repository.getUserPostsCount(user);
+    }
+
+    @Override
+    public List<Post> findPostsLikedByUser(User user, int limit, int offset) {
+        return repository.findPostsLikedByUser(user, limit, offset);
     }
 
     @Override

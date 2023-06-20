@@ -123,9 +123,9 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> findPostsByUser(User user) {
+    public List<Post> findPostsByUser(User user, int limit, int offset) {
 
-        final String query = "select * from post_app.posts where user_id = ?";
+        final String query = "select * from post_app.posts where user_id = ? limit ? offset ?";
 
         List<Post> posts = new ArrayList<>();
 
@@ -133,7 +133,32 @@ public class PostRepositoryImpl implements PostRepository {
 
             statement.setInt(1, user.getUserId());
 
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                posts.add(postMapper(rs));
+            }
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return posts;
+    }
+
+    @Override
+    public List<Post> findPostsLikedByUser(User user, int limit, int offset) {
+
+        final String query = "select u.user_id from post_app.subscribers f join post_app.users u on f.parent_id = u.user_id join post_app.posts p " +
+                "on u.user_id = p.user_id where f.child_id = ? order by p.created_at desc limit ? offset ?";
+
+        List<Post> posts = new ArrayList<>();
+
+        try(PreparedStatement statement = getConnection().prepareStatement(query)){
+            statement.setInt(1, user.getUserId());
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
+
+            ResultSet rs = statement.executeQuery();
             while (rs.next()){
                 posts.add(postMapper(rs));
             }

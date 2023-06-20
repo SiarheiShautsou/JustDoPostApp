@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isSubscribed(User user, User subscriber) {
-        return repository.isSubscribed(user, subscriber);
+    public boolean isSubscribed(String username, String subscriberUsername) {
+        return repository.isSubscribed(username, subscriberUsername);
     }
 
     @Override
