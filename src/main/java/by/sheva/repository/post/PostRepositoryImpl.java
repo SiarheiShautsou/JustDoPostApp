@@ -241,14 +241,13 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public boolean isLikedPost(Post post, User user) {
-
+    public boolean isLikedPost(Post post, int userId){
         final String query = "select count(*) from post_app.likes where post_id = ? and user_id = ?";
 
         try(PreparedStatement statement = getConnection().prepareStatement(query)){
 
             statement.setInt(1, post.getPostId());
-            statement.setInt(2, user.getUserId());
+            statement.setInt(2, userId);
 
             ResultSet rs = statement.executeQuery();
 

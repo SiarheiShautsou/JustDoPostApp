@@ -44,8 +44,8 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<Comment> findAllCommentsByPost(Post post) {
-        return repository.findAllCommentsByPost(post);
+    public List<Comment> findAllCommentsByPost(Post post, int limit, int offset) {
+        return repository.findAllCommentsByPost(post, limit, offset);
     }
 
     @Override

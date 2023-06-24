@@ -154,15 +154,18 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public List<Comment> findAllCommentsByPost(Post post) {
+    public List<Comment> findAllCommentsByPost(Post post, int limit, int offset) {
 
-        final String query = "select * from post_app.comments where post_id = ?";
+        final String query = "select * from post_app.comments where post_id = ? limit ? offset ?";
 
         List<Comment> comments = new ArrayList<>();
 
         try(PreparedStatement statement = getConnection().prepareStatement(query)){
 
             statement.setInt(1, post.getPostId());
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
+
 
             ResultSet rs = statement.executeQuery();
             while(rs.next()){

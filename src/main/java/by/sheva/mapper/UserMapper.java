@@ -1,6 +1,7 @@
 package by.sheva.mapper;
 
 import by.sheva.domain.User;
+import by.sheva.security.SessionPrincipalUser;
 import by.sheva.web.request.UserRequest;
 
 public class UserMapper {
@@ -16,6 +17,17 @@ public class UserMapper {
         userRequest.setPhoto(user.getPhoto());
 
         return userRequest;
+    }
+
+    public static SessionPrincipalUser mapToSessionPrincipalUser(User user){
+
+        return SessionPrincipalUser.builder()
+                .setId(user.getUserId())
+                .setName(user.getName())
+                .setUsername(user.getUserName())
+                .setEmail(user.getEmail())
+                .setPhoto(user.getPhoto())
+                .build();
     }
 
 }

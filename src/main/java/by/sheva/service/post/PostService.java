@@ -23,7 +23,7 @@ public interface PostService{
 
     boolean getLikeForPost(Post post, User user);
 
-    boolean isLikedPost(Post post, User user);
+    boolean isLikedPost(Post post, int userId);
 
     boolean deleteLikeForPost(Post post, User user);
 

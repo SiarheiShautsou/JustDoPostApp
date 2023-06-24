@@ -60,8 +60,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public boolean isLikedPost(Post post, User user) {
-        return repository.isLikedPost(post, user);
+    public boolean isLikedPost(Post post, int userId) {
+        return repository.isLikedPost(post, userId);
     }
 
     @Override

@@ -19,7 +19,7 @@ public interface CommentRepository extends CRUDRepository<Integer, Comment> {
     @Override
     List<Comment> findAll(int limit, int offset);
 
-    List<Comment> findAllCommentsByPost(Post post);
+    List<Comment> findAllCommentsByPost(Post post, int limit, int offset);
 
     boolean deleteAllCommentsByPost(Post post);
 

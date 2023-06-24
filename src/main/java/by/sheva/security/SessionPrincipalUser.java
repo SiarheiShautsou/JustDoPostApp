@@ -17,9 +17,9 @@ public class SessionPrincipalUser {
     public SessionPrincipalUser() {
     }
 
-    public SessionPrincipalBuilder builder() {
+    public static SessionPrincipalBuilder builder() {
 
-        return new SessionPrincipalUser.SessionPrincipalBuilder();
+        return new SessionPrincipalUser().new SessionPrincipalBuilder();
     }
 
     public class SessionPrincipalBuilder {

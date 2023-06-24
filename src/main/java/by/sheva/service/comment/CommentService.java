@@ -16,7 +16,7 @@ public interface CommentService {
 
     List<Comment> findAllCommentsWithParams(int limit, int offset);
 
-    List<Comment> findAllCommentsByPost(Post post);
+    List<Comment> findAllCommentsByPost(Post post, int limit, int offset);
 
     boolean deleteAllCommentsForPost(Post post);
 

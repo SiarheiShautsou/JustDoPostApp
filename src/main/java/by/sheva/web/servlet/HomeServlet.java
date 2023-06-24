@@ -6,12 +6,14 @@ import by.sheva.service.post.PostServiceImpl;
 import by.sheva.service.user.UserServiceImpl;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
 
@@ -29,7 +31,7 @@ public class HomeServlet extends HttpServlet {
         try{
         List<User> subscriptions = userService.getAllSubscriptionsByUser(sessionUser);
 
-        int pageCount = DEFAULT_POSTS_PER_PAGE;
+        int pageCount = DEFAULT_PAGES;
 
         for (User subscription : subscriptions) {
             int userPostsCount = postService.getUserPostsCount(subscription);

@@ -31,7 +31,7 @@ public class ProfileServlet extends HttpServlet {
         UserServiceImpl userService = UserServiceImpl.getInstance();
 
         String username = req.getParameter(USERNAME_PARAMETER);
-        Optional<User> account = null;
+        Optional<User> account;
         try {
             account = userService.findUserByUsername(username);
 

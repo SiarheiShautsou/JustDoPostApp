@@ -28,7 +28,7 @@ public interface PostRepository extends CRUDRepository<Integer, Post> {
 
     boolean getLike(Post post, User user);
 
-    boolean isLikedPost(Post post, User user);
+    boolean isLikedPost(Post post, int userID);
 
     boolean deleteLike(Post post, User user);
 
