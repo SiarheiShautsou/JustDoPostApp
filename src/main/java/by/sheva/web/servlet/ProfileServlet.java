@@ -5,8 +5,8 @@ import by.sheva.domain.User;
 import by.sheva.mapper.UserMapper;
 import by.sheva.security.SessionPrincipalUser;
 import by.sheva.service.post.PostServiceImpl;
-import by.sheva.web.request.UserRequest;
 import by.sheva.service.user.UserServiceImpl;
+import by.sheva.web.request.UserRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +53,7 @@ public class ProfileServlet extends HttpServlet {
 
                 PostServiceImpl postService = PostServiceImpl.getInstance();
                 int userPostsCount = postService.getUserPostsCount(userAccount);
-                int countOfPages = (int)Math.ceil((double) userPostsCount / POSTS_PER_PAGE);
+                int countOfPages = (int) Math.ceil((double) userPostsCount / POSTS_PER_PAGE);
                 req.setAttribute("countOfPages", countOfPages);
 
                 String requestedPage = req.getParameter(PAGE_NUMBER);
