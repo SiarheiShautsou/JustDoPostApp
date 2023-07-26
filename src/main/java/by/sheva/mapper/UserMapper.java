@@ -30,4 +30,13 @@ public class UserMapper {
                 .build();
     }
 
+    public static User toUser(SessionPrincipalUser sessionPrincipalUser){
+        return User.builder()
+                .setUserId(sessionPrincipalUser.getId())
+                .setUserName(sessionPrincipalUser.getUsername())
+                .setName(sessionPrincipalUser.getName())
+                .setEmail(sessionPrincipalUser.getEmail())
+                .setPhoto(sessionPrincipalUser.getPhoto())
+                .build();
+    }
 }
